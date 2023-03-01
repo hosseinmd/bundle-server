@@ -1,5 +1,7 @@
 import express from "express";
 import multer from "multer";
+import decompress from "decompress";
+import { addBundle } from "./addBundle";
 
 const upload = multer({ dest: "files/zips/" });
 
@@ -10,15 +12,19 @@ app.use(express.urlencoded({ extended: true }));
 app.post(
   "/upload_bundle",
   upload.single("file"),
-  function uploadFiles(req, res) {
-    console.log(req.body);
+  async function uploadFiles(req, res) {
+    const buildNumber = req.headers.buildnumber as string;
+    console.log({ buildNumber });
     console.log(req.file);
-    res.json({ message: "Successfully uploaded files" });
+    if (req.file) {
+      await addBundle(req.file?.path, buildNumber);
+    }
+    res.json({ message: "Successfully uploaded Bundle" });
   }
 );
 
 app.use("/bundles", express.static("files/bundles"));
 
-app.listen(9000, () => {
-  console.log(`Server started... http://localhost:9000`);
+app.listen(8085, () => {
+  console.log(`Server started... http://localhost:8085`);
 });
