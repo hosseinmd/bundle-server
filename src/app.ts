@@ -14,10 +14,11 @@ app.post(
   upload.single("file"),
   async function uploadFiles(req, res) {
     const buildNumber = req.headers.buildnumber as string;
+    const app = req.headers.app as string;
     console.log({ buildNumber });
     console.log(req.file);
     if (req.file) {
-      await addBundle(req.file?.path, buildNumber);
+      await addBundle(req.file?.path, buildNumber, app);
     }
     res.json({ message: "Successfully uploaded Bundle" });
   }
