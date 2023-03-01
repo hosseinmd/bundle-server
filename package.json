@@ -1,6 +1,7 @@
 {
   "name": "bundle-server",
   "scripts": {
+    "deploy": "chmod +x deploy.sh && ./deploy.sh",
     "start": "nodemon src/app.ts"
   },
   "dependencies": {
