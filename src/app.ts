@@ -37,7 +37,7 @@ app.post(
 
     if (req.file) {
       const link = await addAPK(req.file?.path, buildNumber, variant, mode);
-      res.json(link);
+      res.send(link);
       return;
     }
 
